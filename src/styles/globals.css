@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy:     #081F3A;
+  --midnight: #071426;
+  --electric: #2563EB;
+  --electric-dark: #1d4ed8;
+  --silver:   #C7CDD6;
+  --charcoal: #475569;
+  --soft-white: #F8FAFC;
+  --champagne: #D9D6CF;
+  --card-bg:  #0d2a4a;
+  --card-border: rgba(199,205,214,0.12);
+  --font-display: 'Montserrat';
+  --font-accent: 'Bebas Neue';
+  --font-body: 'Inter';
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--navy);
+  color: var(--soft-white);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(199,205,214,0.2); border-radius: 99px; }
+
+/* Background atmospheric layers */
+.bg-glow::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 35% at 50% -5%, rgba(37,99,235,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 25% at 100% 100%, rgba(7,20,38,0.8) 0%, transparent 60%),
+    linear-gradient(180deg, #081F3A 0%, #071426 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle grid texture */
+.bg-glow::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(199,205,214,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(199,205,214,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass {
+  background: rgba(13, 42, 74, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+}
+
+.glass-dark {
+  background: rgba(7, 20, 38, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(199,205,214,0.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 40%, var(--silver) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.electric-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563EB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2563EB 0%, #1d4ed8 100%);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.35);
+}
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(37,99,235,0.45); }
+.btn-primary:disabled { opacity: 0.4; transform: none; }
+
+/* FIG badge */
+.fig-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--silver);
+  background: linear-gradient(145deg, #C7CDD6 0%, #9aa3af 40%, #C7CDD6 100%);
+  color: #081F3A;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.stagger > * {
+  animation: fadeUp 0.35s ease both;
+}
+.stagger > *:nth-child(1) { animation-delay: 0.00s; }
+.stagger > *:nth-child(2) { animation-delay: 0.05s; }
+.stagger > *:nth-child(3) { animation-delay: 0.10s; }
+.stagger > *:nth-child(4) { animation-delay: 0.15s; }
+.stagger > *:nth-child(5) { animation-delay: 0.20s; }
+.stagger > *:nth-child(6) { animation-delay: 0.25s; }
+.stagger > *:nth-child(7) { animation-delay: 0.30s; }
+.stagger > *:nth-child(8) { animation-delay: 0.35s; }
+.stagger > *:nth-child(9) { animation-delay: 0.40s; }
+.stagger > *:nth-child(10) { animation-delay: 0.45s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid rgba(199,205,214,0.15);
+  border-top-color: #2563EB;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--silver), transparent);
+  opacity: 0.2;
+}
