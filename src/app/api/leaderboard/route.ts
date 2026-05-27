@@ -13,18 +13,17 @@ export async function GET() {
     if (!res.ok) throw new Error(`Sheet fetch failed: ${res.status}`)
     const csv = await res.text()
 
-    const lines = csv.trim().split('\n').slice(1) // skip header row
+    const lines = csv.trim().split('\n').slice(1)
     const map: Record<string, number> = {}
 
     for (const line of lines) {
-      // Handle quoted CSV fields robustly
-      const parts = line.match(/(".*?"|[^,]+)/g) || []
+      const parts = line.match(/(".*?"|[^,]+)/g) ?? []
       if (parts.length < 2) continue
-      const name = parts[0].replace(/"/g, '').trim()
-      const raw  = parts[1].replace(/[",$\s]/g, '').trim()
+      const name = parts[0]!.replace(/"/g, '').trim()
+      const raw  = parts[1]!.replace(/[",$\s]/g, '').trim()
       const val  = parseFloat(raw) || 0
       if (!name) continue
-      map[name] = (map[name] || 0) + val
+      map[name] = (map[name] ?? 0) + val
     }
 
     const agents = Object.entries(map)
