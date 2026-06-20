@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
 
 const tabs = [
-  { href: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
   { href: '/scripts',     label: 'Scripts',     icon: '📋' },
   { href: '/objections',  label: 'Objections',  icon: '🛡' },
   { href: '/roleplay',    label: 'Role Play',   icon: '🤖' },
