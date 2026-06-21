@@ -7,18 +7,25 @@ const B = { fontFamily: 'Bebas Neue, sans-serif' as const }
 
 type Form = { name: string; category: string; conviction: number; [k: string]: string | number }
 
-interface Field { key: string; label: string; ph: string; type: 'number' | 'text' | 'textarea' }
+interface Field { key: string; label: string; ph: string; type: 'number' | 'text' | 'textarea' | 'date' }
 interface Built { statement: string; haveIt: string; oldThought: string; newThought: string; actions: string[]; physical: string; gratitude: string; scene: string }
 interface Cat { id: string; label: string; emoji: string; fields: Field[]; build: (f: Form) => Built }
 
 const v = (f: Form, k: string) => String(f[k] || '').trim()
+
+function fmtDate(iso: string): string {
+  if (!iso) return ''
+  const d = new Date(iso + 'T00:00:00')
+  if (isNaN(d.getTime())) return iso
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+}
 
 const CONFIG: Record<string, Cat> = {
   money: {
     id: 'money', label: 'Money & Income', emoji: '💰',
     fields: [
       { key: 'amount', label: 'How much money do you want to receive? ($)', ph: 'e.g. 10000', type: 'number' },
-      { key: 'byWhen', label: 'By when?', ph: 'e.g. by December 31st, 2025', type: 'text' },
+      { key: 'byWhen', label: 'By when?', ph: 'Pick a date', type: 'date' },
       { key: 'whatFor', label: 'What is this money for?', ph: 'e.g. pay off my debt and invest in my business', type: 'text' },
       { key: 'howChange', label: 'How will having this money change your life?', ph: "e.g. I'll have financial freedom and focus on what matters most", type: 'textarea' },
     ],
@@ -111,7 +118,7 @@ const CONFIG: Record<string, Cat> = {
 function nonMoneyFields(goalPh: string): Field[] {
   return [
     { key: 'goal', label: 'What do you want? Be specific.', ph: goalPh, type: 'text' },
-    { key: 'byWhen', label: 'By when?', ph: 'e.g. by the end of this year', type: 'text' },
+    { key: 'byWhen', label: 'By when?', ph: 'Pick a date', type: 'date' },
     { key: 'whatFor', label: 'Why does this matter to you?', ph: 'e.g. so I can feel free and fully present', type: 'text' },
     { key: 'howChange', label: 'How will achieving this change your life?', ph: 'e.g. I will feel proud, calm, and fully alive', type: 'textarea' },
   ]
@@ -168,6 +175,8 @@ export default function FMBPage() {
                 <div style={{ ...S, fontSize: 12, fontWeight: 600, color: '#C7CDD6', marginBottom: 6 }}>{fl.label}</div>
                 {fl.type === 'textarea'
                   ? <textarea value={String(form[fl.key] || '')} onChange={e => set(fl.key, e.target.value)} rows={2} placeholder={fl.ph} style={{ ...fieldStyle, resize: 'none', lineHeight: 1.6 }} />
+                  : fl.type === 'date'
+                  ? <input type="date" value={String(form[fl.key] || '')} onChange={e => set(fl.key, e.target.value)} style={{ ...fieldStyle, colorScheme: 'dark' }} />
                   : <input value={String(form[fl.key] || '')} onChange={e => set(fl.key, fl.type === 'number' ? e.target.value.replace(/[^0-9]/g, '') : e.target.value)} inputMode={fl.type === 'number' ? 'numeric' : undefined} placeholder={fl.ph} style={fieldStyle} />}
               </div>
             ))}
@@ -229,7 +238,7 @@ export default function FMBPage() {
   return (
     <Shell step={3}>
       <div className="mb-2 flex justify-between items-center">
-        <p style={{ ...S, fontSize: 13, color: '#C7CDD6' }}>{v(form, 'name') ? `${v(form, 'name')} · ` : ''}{cfg?.label}</p>
+        <p style={{ ...S, fontSize: 13, color: '#C7CDD6' }}>{v(form, 'name') ? `${v(form, 'name')} · ` : ''}{cfg?.label}{v(form, 'byWhen') ? ` · by ${fmtDate(v(form, 'byWhen'))}` : ''}</p>
         <button onClick={() => setStage('clarity')} style={{ ...S, fontSize: 12, border: '1px solid rgba(199,205,214,0.15)', borderRadius: 10, padding: '8px 16px', color: '#C7CDD6', background: 'transparent', cursor: 'pointer' }}>Start Over</button>
       </div>
 
