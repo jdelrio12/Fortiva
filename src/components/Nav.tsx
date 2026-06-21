@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
 const tabs = [
-  { href: '/scripts',     label: 'Scripts',     icon: '📋' },
-  { href: '/objections',  label: 'Objections',  icon: '🛡' },
-  { href: '/roleplay',    label: 'Role Play',   icon: '🤖' },
-  { href: '/train',       label: 'Train',       icon: '🎯' },
-  { href: '/fmb',         label: 'FMB',         icon: '🧭' },
+  { href: '/scripts',     label: 'Scripts',     icon: '📋', match: ['/scripts'] },
+  { href: '/objections',  label: 'Objections',  icon: '🛡', match: ['/objections'] },
+  { href: '/roleplay',    label: 'Role Play',   icon: '🤖', match: ['/roleplay'] },
+  { href: '/train',       label: 'Train',       icon: '🎯', match: ['/train'] },
+  { href: '/growth',      label: 'Growth',      icon: '🌱', match: ['/growth', '/fmb', '/mentor'] },
 ]
 export default function Nav() {
   const path = usePathname()
@@ -38,7 +38,7 @@ export default function Nav() {
       <nav className="fixed bottom-0 inset-x-0 z-50 glass-dark border-t" style={{ borderColor: 'rgba(199,205,214,0.1)' }}>
         <div className="flex items-stretch max-w-2xl mx-auto">
           {tabs.map((tab) => {
-            const active = path.startsWith(tab.href)
+            const active = tab.match.some((m) => path.startsWith(m))
             return (
               <Link key={tab.href} href={tab.href} className="flex-1 flex flex-col items-center gap-1 py-3 transition-colors relative"
                 style={{ color: active ? '#2563EB' : 'rgba(199,205,214,0.4)', fontFamily: 'Inter, sans-serif', fontSize: 9, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
