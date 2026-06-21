@@ -135,9 +135,19 @@ const levelOf = (xp: number) => Math.floor(xp / 100) + 1
 const multOf = (streak: number) => (streak >= 7 ? 3 : streak >= 5 ? 2 : streak >= 3 ? 1.5 : 1)
 const shuffle = <T,>(arr: T[]) => arr.map(v => [Math.random(), v] as const).sort((a, b) => a[0] - b[0]).map(p => p[1])
 
-const prepCard = (c: Card): Card => {
-  const order = shuffle(c.choices.map((_, i) => i))
-  return { q: c.q, choices: order.map(i => c.choices[i]), a: order.indexOf(c.a) }
+const buildQueue = (cards: Card[]): Card[] => {
+  let prev = -1
+  return shuffle(cards).map(c => {
+    const positions = c.choices.map((_, i) => i)
+    const options = positions.filter(p => p !== prev)
+    const target = (options.length ? options : positions)[Math.floor(Math.random() * (options.length ? options.length : positions.length))]
+    const distractors = shuffle(c.choices.filter((_, i) => i !== c.a))
+    const out: string[] = []
+    let di = 0
+    for (let p = 0; p < c.choices.length; p++) out[p] = p === target ? c.choices[c.a] : distractors[di++]
+    prev = target
+    return { q: c.q, choices: out, a: target }
+  })
 }
 
 type Screen = 'home' | 'play' | 'results'
@@ -153,6 +163,7 @@ export default function TrainPage() {
   const [streak, setStreak] = useState(0)
   const [correct, setCorrect] = useState(0)
   const [result, setResult] = useState<{ accuracy: number; earned: number; best: number; perfect: boolean; leveledTo: number | null } | null>(null)
+  const [fx, setFx] = useState<{ id: number; type: 'correct' | 'wrong'; points?: number; streakMsg?: string } | null>(null)
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -166,8 +177,8 @@ export default function TrainPage() {
 
   const start = (d: Deck) => {
     setDeck(d)
-    setQueue(shuffle(d.cards).map(prepCard))
-    setIdx(0); setChosen(null); setScore(0); setStreak(0); setCorrect(0)
+    setQueue(buildQueue(d.cards))
+    setIdx(0); setChosen(null); setScore(0); setStreak(0); setCorrect(0); setFx(null)
     setScreen('play')
   }
   const startMixed = () => {
@@ -180,16 +191,21 @@ export default function TrainPage() {
     setChosen(i)
     if (i === queue[idx].a) {
       const ns = streak + 1
+      const pts = Math.round(10 * multOf(ns))
       setStreak(ns)
-      setScore(s => s + Math.round(10 * multOf(ns)))
+      setScore(s => s + pts)
       setCorrect(c => c + 1)
+      const streakMsg = ns === 3 ? '3 STREAK  ·  x1.5' : ns === 5 ? '5 STREAK  ·  x2' : ns === 7 ? 'ON FIRE  ·  x3' : ''
+      setFx({ id: Date.now(), type: 'correct', points: pts, streakMsg })
     } else {
       setStreak(0)
+      setFx({ id: Date.now(), type: 'wrong' })
     }
   }
 
   const next = () => {
     if (!deck) return
+    setFx(null)
     if (idx + 1 < queue.length) { setIdx(idx + 1); setChosen(null); return }
     const total = queue.length
     const accuracy = total ? correct / total : 0
@@ -258,6 +274,22 @@ export default function TrainPage() {
     const mult = multOf(streak)
     return (
       <div>
+        <style>{`
+@keyframes fxFlash { 0%{opacity:0} 15%{opacity:1} 100%{opacity:0} }
+@keyframes fxFloat { 0%{opacity:0; transform:translateY(14px) scale(.8)} 25%{opacity:1; transform:translateY(0) scale(1.1)} 100%{opacity:0; transform:translateY(-46px) scale(1)} }
+@keyframes fxPop { 0%{opacity:0; transform:scale(.6)} 30%{opacity:1; transform:scale(1.18)} 70%{opacity:1; transform:scale(1)} 100%{opacity:0; transform:scale(1)} }
+`}</style>
+        {fx && (
+          <div key={fx.id} style={{ position: 'fixed', inset: 0, zIndex: 60, pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', inset: 0, animation: 'fxFlash 0.6s ease-out forwards', background: fx.type === 'correct' ? 'radial-gradient(circle at center, rgba(34,197,94,0.35), transparent 70%)' : 'radial-gradient(circle at center, rgba(239,68,68,0.35), transparent 70%)' }} />
+            {fx.type === 'correct' && fx.points && (
+              <div style={{ position: 'absolute', top: '30%', ...M, fontWeight: 900, fontSize: 36, color: '#22c55e', textShadow: '0 2px 14px rgba(0,0,0,0.5)', animation: 'fxFloat 1s ease-out forwards' }}>+{fx.points}</div>
+            )}
+            {fx.streakMsg && (
+              <div style={{ ...M, fontWeight: 900, fontSize: 26, letterSpacing: '0.04em', color: '#EAB308', textShadow: '0 2px 18px rgba(0,0,0,0.6)', animation: 'fxPop 1.2s ease-out forwards' }}>🔥 {fx.streakMsg}</div>
+            )}
+          </div>
+        )}
         <div className="flex items-center justify-between mb-4">
           <div style={{ ...S, fontSize: 12, color: 'rgba(199,205,214,0.5)' }}>{deck.emoji} {deck.name}</div>
           <button onClick={() => setScreen('home')} style={{ ...S, fontSize: 12, color: 'rgba(199,205,214,0.5)', background: 'none', border: 'none', cursor: 'pointer' }}>✕ Quit</button>
