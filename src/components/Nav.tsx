@@ -2,18 +2,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton } from '@clerk/nextjs'
-
 const tabs = [
   { href: '/scripts',     label: 'Scripts',     icon: '📋' },
   { href: '/objections',  label: 'Objections',  icon: '🛡' },
   { href: '/roleplay',    label: 'Role Play',   icon: '🤖' },
+  { href: '/fmb',         label: 'FMB',         icon: '🧭' },
 ]
-
 export default function Nav() {
   const path = usePathname()
   const isAuthPage = path.startsWith('/sign-in') || path.startsWith('/sign-up')
   if (isAuthPage) return null
-
   return (
     <>
       <header className="relative z-20 border-b glass-dark" style={{ borderColor: 'rgba(199,205,214,0.1)' }}>
@@ -36,7 +34,6 @@ export default function Nav() {
         </div>
         <div className="divider" />
       </header>
-
       <nav className="fixed bottom-0 inset-x-0 z-50 glass-dark border-t" style={{ borderColor: 'rgba(199,205,214,0.1)' }}>
         <div className="flex items-stretch max-w-2xl mx-auto">
           {tabs.map((tab) => {
