@@ -6,6 +6,7 @@ const tabs = [
   { href: '/scripts',     label: 'Scripts',     icon: '📋' },
   { href: '/objections',  label: 'Objections',  icon: '🛡' },
   { href: '/roleplay',    label: 'Role Play',   icon: '🤖' },
+  { href: '/train',       label: 'Train',       icon: '🎯' },
   { href: '/fmb',         label: 'FMB',         icon: '🧭' },
 ]
 export default function Nav() {
