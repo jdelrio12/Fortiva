@@ -29,15 +29,15 @@ const CONFIG: Record<string, Cat> = {
         statement: `I am so happy and grateful now that $${amt} flows into my life, allowing me to ${forWhat}. Money comes to me easily and frequently.`,
         haveIt: `I have this money in my life, and the freedom it brings is real. Abundance flows to me naturally and I am financially free.`,
         oldThought: `I desperately need this money. I don't have enough. Something is wrong with my finances.`,
-        newThought: `Money flows to me naturally. I am already abundant in so many ways. This money is simply on its way — there is nothing to worry about.`,
+        newThought: `Money flows to me naturally. I am already abundant in so many ways. This money is simply on its way, there is nothing to worry about.`,
         actions: [
-          `Take one action today that a wealthy version of you would take — reach out to someone, sharpen one skill, or open that account.`,
+          `Take one action today that a wealthy version of you would take, reach out to someone, sharpen one skill, or open that account.`,
           `Review your income and find one place you could add value and earn more within the next 30 days.`,
-          `Write down 10 ways this money could reach you — from expected to wildly unexpected — and stay open to all of them.`,
+          `Write down 10 ways this money could reach you, from expected to wildly unexpected, and stay open to all of them.`,
         ],
-        physical: `The specific amount — $${amt} — arriving in your account, a check, or a deal. The exact number that unlocks your next level.`,
-        gratitude: `Spend 5 minutes each morning feeling grateful for every dollar you already have — every bill you can pay, every small purchase. Treat each win as evidence more is coming.`,
-        scene: `See yourself opening your account and seeing that exact number. Feel the relief, the pride, the freedom. Picture what you do first — who you call, where you go.`,
+        physical: `The specific amount, $${amt}, arriving in your account, a check, or a deal. The exact number that unlocks your next level.`,
+        gratitude: `Spend 5 minutes each morning feeling grateful for every dollar you already have, every bill you can pay, every small purchase. Treat each win as evidence more is coming.`,
+        scene: `See yourself opening your account and seeing that exact number. Feel the relief, the pride, the freedom. Picture what you do first, who you call, where you go.`,
       }
     },
   },
@@ -48,9 +48,9 @@ const CONFIG: Record<string, Cat> = {
       `I am doing work that lights me up, and it feels completely natural. I am exactly where I'm meant to be, growing every day.`,
       `I'm stuck. I'm running out of time. I'll never find work that actually matters to me.`,
       `The right path is unfolding for me. I am capable, and aligned opportunities are already on their way.`,
-      [`Take one action today the fulfilled version of you would take — reach out, apply, create, or learn.`,
+      [`Take one action today the fulfilled version of you would take, reach out, apply, create, or learn.`,
        `Pick one skill or relationship to invest in this month that moves you toward this.`,
-       `Write down 5 ways this could come to you — expected and unexpected — and stay open to all of them.`],
+       `Write down 5 ways this could come to you, expected and unexpected, and stay open to all of them.`],
       `Spend 5 minutes each morning grateful for the talents, people, and chances you already have. Treat each small win as proof you're on your way.`,
       `See yourself in that role or moment. Feel the pride and the ease of it. Picture what you do first and who you tell.`),
   },
@@ -61,10 +61,10 @@ const CONFIG: Record<string, Cat> = {
       `I am surrounded by love and real connection, and it feels completely natural. I am worthy of being loved exactly as I am.`,
       `I'm always alone. The right people never show up for me. Something is wrong with me.`,
       `I am worthy of love, and the right people are finding their way to me. Connection flows to me naturally.`,
-      [`Do one thing today the loved, connected version of you would do — reach out, show up, or open up.`,
+      [`Do one thing today the loved, connected version of you would do, reach out, show up, or open up.`,
        `Give the kind of connection you want to receive to someone this week.`,
        `Write down 5 ways this connection could come into your life and stay open to all of them.`],
-      `Spend 5 minutes each morning grateful for the love already in your life — friends, family, small kindnesses. Treat each as proof more is coming.`,
+      `Spend 5 minutes each morning grateful for the love already in your life, friends, family, small kindnesses. Treat each as proof more is coming.`,
       `See the moment you feel truly seen and loved. Feel the warmth of it. Picture exactly where you are and who is there.`),
   },
   health: {
@@ -74,7 +74,7 @@ const CONFIG: Record<string, Cat> = {
       `I am strong, healthy, and full of energy, and it feels completely natural. I treat my body like something I love.`,
       `I'll never get there. My body is working against me. It's too late for me.`,
       `My body is capable and resilient. Every day I'm getting stronger, and it's getting easier.`,
-      [`Do one thing today the healthy version of you would do — move, hydrate, rest, or nourish yourself well.`,
+      [`Do one thing today the healthy version of you would do, move, hydrate, rest, or nourish yourself well.`,
        `Pick one small habit to repeat daily this week that compounds toward this.`,
        `Write down 5 signs your body is already supporting you and notice them all day.`],
       `Spend 5 minutes each morning grateful for what your body already does for you. Treat every good choice as evidence it's working.`,
@@ -102,7 +102,7 @@ const CONFIG: Record<string, Cat> = {
       `What's meant for me is already on its way. I am capable, and the path is unfolding.`,
       [`Take one action today the version of you who already has this would take.`,
        `Pick one step this month that moves you meaningfully closer.`,
-       `Write down 5 ways this could come to you — expected and unexpected — and stay open.`],
+       `Write down 5 ways this could come to you, expected and unexpected, and stay open.`],
       `Spend 5 minutes each morning grateful for how far you've already come. Treat each small win as proof more is coming.`,
       `See the moment it's real. Feel the pride and relief. Picture what you do first and who you tell.`),
   },
@@ -122,7 +122,7 @@ function generic(f: Form, flow: string, haveIt: string, oldT: string, newT: stri
   return {
     statement: `I am so happy and grateful now that ${goal} is mine. ${flow}`,
     haveIt, oldThought: oldT, newThought: newT, actions, gratitude, scene,
-    physical: `${goal} — real, present, and specific. Picture the exact moment it becomes true.`,
+    physical: `${goal}, real, present, and specific. Picture the exact moment it becomes true.`,
   }
 }
 
@@ -138,7 +138,7 @@ export default function FMBPage() {
   const primaryKey = form.category === 'money' ? 'amount' : 'goal'
   const hasEnough = !!form.category && (!!v(form, primaryKey) || !!v(form, 'whatFor'))
 
-  // ---------- STEP 1 — CLARITY ----------
+  // ---------- STEP 1, CLARITY ----------
   if (stage === 'clarity') return (
     <Shell step={1}>
       <SectionTitle title="Get clear on what you want" sub="Manifestation begins with absolute clarity. Pick a category, fill in your details, and we'll build your personalized statement." />
@@ -189,7 +189,7 @@ export default function FMBPage() {
     </Shell>
   )
 
-  // ---------- STEP 2 — CONVICTION ----------
+  // ---------- STEP 2, CONVICTION ----------
   if (stage === 'conviction') return (
     <Shell step={2}>
       <SectionTitle title="Conviction Test" sub="Your belief determines your results. Rate how convinced you are that this will happen for you." />
@@ -223,7 +223,7 @@ export default function FMBPage() {
     </Shell>
   )
 
-  // ---------- STEP 3 — YOUR PROCESS ----------
+  // ---------- STEP 3, YOUR PROCESS ----------
   const p = built!
   const stmt = p.statement
   return (
@@ -233,7 +233,7 @@ export default function FMBPage() {
         <button onClick={() => setStage('clarity')} style={{ ...S, fontSize: 12, border: '1px solid rgba(199,205,214,0.15)', borderRadius: 10, padding: '8px 16px', color: '#C7CDD6', background: 'transparent', cursor: 'pointer' }}>Start Over</button>
       </div>
 
-      {/* Meditation audio — front and center */}
+      {/* Meditation audio, front and center */}
       <div className="glass rounded-2xl p-5" style={{ borderColor: 'rgba(37,99,235,0.35)' }}>
         <div style={{ ...M, fontWeight: 800, fontSize: 17, color: '#F8FAFC' }}>🎧 Get centered first</div>
         <p style={{ ...S, fontSize: 13, color: '#C7CDD6', marginTop: 4, lineHeight: 1.5, marginBottom: 12 }}>Press play, settle into a calm state, then move through your process. Pick whatever helps you focus.</p>
@@ -253,15 +253,15 @@ export default function FMBPage() {
       </ProcessStep>
 
       <ProcessStep n={3} title="Your Visualization Practice">
-        <Para>Visualization isn't daydreaming — it's deliberate mental rehearsal. Your brain fires the same pathways whether you live something or vividly imagine it.</Para>
+        <Para>Visualization isn't daydreaming, it's deliberate mental rehearsal. Your brain fires the same pathways whether you live something or vividly imagine it.</Para>
         <Para><strong style={{ color: '#F8FAFC' }}>The most powerful technique:</strong> picture someone you deeply love looking you in the eyes and congratulating you for achieving exactly this. Hear their voice. See the pride on their face. Feel the warmth of that moment. Emotion is the engine.</Para>
-        <Para><strong style={{ color: '#F8FAFC' }}>Your scene:</strong> {p.scene} Make it vivid, colorful, and emotional. Practice 5–10 minutes every morning right after waking, when your mind is most receptive.</Para>
+        <Para><strong style={{ color: '#F8FAFC' }}>Your scene:</strong> {p.scene} Make it vivid, colorful, and emotional. Practice 5-10 minutes every morning right after waking, when your mind is most receptive.</Para>
       </ProcessStep>
 
       <ProcessStep n={4} title="Get Into Your Frequency">
-        <Para>You don't attract what you want — you attract what you are. Gratitude, joy, and confidence align you with the outcomes you're after.</Para>
+        <Para>You don't attract what you want, you attract what you are. Gratitude, joy, and confidence align you with the outcomes you're after.</Para>
         <Para><strong style={{ color: '#F8FAFC' }}>Your ritual:</strong> {p.gratitude}</Para>
-        <Para>Protect your energy. Limit time with people, content, or situations that drain you — your frequency is your most important asset.</Para>
+        <Para>Protect your energy. Limit time with people, content, or situations that drain you, your frequency is your most important asset.</Para>
       </ProcessStep>
 
       <ProcessStep n={5} title="Lower the Importance">
@@ -282,20 +282,20 @@ export default function FMBPage() {
       </ProcessStep>
 
       <ProcessStep n={7} title="The Underlying Feeling">
-        <Para>You're not really manifesting a thing — you're manifesting a feeling. The goal, the money, the relationship — they're vehicles for an emotional state you want to live in: freedom, security, confidence, peace.</Para>
+        <Para>You're not really manifesting a thing, you're manifesting a feeling. The goal, the money, the relationship, they're vehicles for an emotional state you want to live in: freedom, security, confidence, peace.</Para>
         <Para><strong style={{ color: '#F8FAFC' }}>The loop technique:</strong></Para>
-        <Para>1. Get completely calm — meditate 5–30 minutes until your mind is a still lake. Don't rush this.<br />2. Choose someone you deeply love as your anchor.<br />3. Picture them looking you in the eyes, congratulating you on the exact realization of this. Hear their voice, see their face, feel the joy.<br />4. Loop that same scene continuously — don't switch, don't add new scenes.<br />5. Keep going until it feels almost overwhelming — that emotional saturation is the signal. Then stop.</Para>
-        <Para>It should feel effortless. If it feels forced, you haven't reached deep enough calm — return to the meditation and try again. The calm state is everything.</Para>
+        <Para>1. Get completely calm, meditate 5-30 minutes until your mind is a still lake. Don't rush this.<br />2. Choose someone you deeply love as your anchor.<br />3. Picture them looking you in the eyes, congratulating you on the exact realization of this. Hear their voice, see their face, feel the joy.<br />4. Loop that same scene continuously, don't switch, don't add new scenes.<br />5. Keep going until it feels almost overwhelming, that emotional saturation is the signal. Then stop.</Para>
+        <Para>It should feel effortless. If it feels forced, you haven't reached deep enough calm, return to the meditation and try again. The calm state is everything.</Para>
       </ProcessStep>
 
       <ProcessStep n={8} title="The Physical Manifestation">
-        <Para>This is what you're calling into reality — not just an idea, but a real, specific outcome:</Para>
+        <Para>This is what you're calling into reality, not just an idea, but a real, specific outcome:</Para>
         <Quote>{p.physical}</Quote>
         <Para>Get as specific as possible. The subconscious loves detail. Write it down, find a photo, make it real in your mind first.</Para>
       </ProcessStep>
 
       <ProcessStep n={9} title="Release & Trust">
-        <Para>This is the step most people skip — and where it lives or dies. After the inner work, let go of the <em>how</em>. There are more pathways to your desire than your mind can conceive. Signs of attachment: constantly checking for results, worrying about timing, forcing outcomes.</Para>
+        <Para>This is the step most people skip, and where it lives or dies. After the inner work, let go of the <em>how</em>. There are more pathways to your desire than your mind can conceive. Signs of attachment: constantly checking for results, worrying about timing, forcing outcomes.</Para>
         <Quote>“I have planted the seed. I water it with belief, gratitude, and action. I trust the harvest to arrive at exactly the right time.”</Quote>
       </ProcessStep>
 
@@ -303,17 +303,17 @@ export default function FMBPage() {
         <div style={{ ...M, fontWeight: 800, fontSize: 18, color: '#F8FAFC', marginBottom: 4 }}>Your Daily Protocol</div>
         <Para>Manifestation is a daily practice, not a one-time event. Consistency is the whole game.</Para>
         <div style={{ marginTop: 12 }}>
-          <ProtoHead>Every Morning (15–40 min)</ProtoHead>
-          <Para>Speak your statement aloud before you touch your phone. Meditate to stillness (5–30 min). Run the visualization loop until it feels emotionally full, then stop. Hand-write your “I have it” statement once, slowly, with feeling.</Para>
+          <ProtoHead>Every Morning (15-40 min)</ProtoHead>
+          <Para>Speak your statement aloud before you touch your phone. Meditate to stillness (5-30 min). Run the visualization loop until it feels emotionally full, then stop. Hand-write your “I have it” statement once, slowly, with feeling.</Para>
           <ProtoHead>Throughout the Day</ProtoHead>
           <Para>Catch desperate thinking and return to: “{p.newThought}” Take one inspired action from alignment. Celebrate every small related win as evidence it's in motion.</Para>
           <ProtoHead>Every Evening</ProtoHead>
           <Para>Write 3 gratitudes tied to your desire. Plan tomorrow's one step. Close with: “I've done my work today. I trust it is enough. I release the outcome and I rest.”</Para>
         </div>
-        <Para style={{ marginTop: 10, color: 'rgba(199,205,214,0.6)' }}>Follow this for at least 30 consecutive days. Don't evaluate results before then — just show up and trust the process.</Para>
+        <Para style={{ marginTop: 10, color: 'rgba(199,205,214,0.6)' }}>Follow this for at least 30 consecutive days. Don't evaluate results before then, just show up and trust the process.</Para>
       </div>
 
-      <p style={{ ...S, fontSize: 11, color: 'rgba(199,205,214,0.35)', lineHeight: 1.5, textAlign: 'center' }}>A mindset and focus practice — for reflection and motivation, not a guarantee of outcomes.</p>
+      <p style={{ ...S, fontSize: 11, color: 'rgba(199,205,214,0.35)', lineHeight: 1.5, textAlign: 'center' }}>A mindset and focus practice, for reflection and motivation, not a guarantee of outcomes.</p>
     </Shell>
   )
 }
@@ -413,7 +413,7 @@ const SOUNDS: Sound[] = [
   { id: 'energize', name: 'Energize', best: 'A confident, high-frequency lift', type: 'binaural', base: 210, beat: 16, needsHeadphones: true },
   { id: 'manifest', name: 'Manifestation · 528 Hz', best: 'Intention-setting & visualization', type: 'tone', freq: 528 },
   { id: 'ground', name: 'Grounding · 432 Hz', best: 'Steady, calm background on any device', type: 'tone', freq: 432 },
-  { id: 'clarity', name: 'Clarity · 852 Hz', best: 'Clearing a busy mind — higher, brighter tone', type: 'tone', freq: 852 },
+  { id: 'clarity', name: 'Clarity · 852 Hz', best: 'Clearing a busy mind, higher, brighter tone', type: 'tone', freq: 852 },
 ]
 
 function SoundPlayer() {
