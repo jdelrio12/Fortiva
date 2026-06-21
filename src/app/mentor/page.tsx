@@ -54,6 +54,7 @@ export default function MentorPage() {
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null)
   const voiceOnRef = useRef(true)
   const sendRef = useRef<((t?: string) => void) | null>(null)
+  const speakTokenRef = useRef(0)
 
   // tones
   const [activeTone, setActiveTone] = useState<string | null>(null)
@@ -164,16 +165,37 @@ export default function MentorPage() {
     const u = new SpeechSynthesisUtterance(' '); u.volume = 0
     try { synth.speak(u) } catch {}
   }
-  const stopSpeaking = () => { if (typeof window !== 'undefined') window.speechSynthesis?.cancel() }
+  const stopSpeaking = () => {
+    speakTokenRef.current++
+    if (typeof window !== 'undefined') window.speechSynthesis?.cancel()
+  }
+  const isBeat = (s: string) => /^(in|out|hold|one|two|three|four|five|six|seven|eight|nine|ten|\d{1,2})$/i.test(s.trim())
   const speak = (text: string, onEnd?: () => void) => {
     const synth = typeof window !== 'undefined' ? window.speechSynthesis : null
-    if (!voiceOnRef.current || !synth) { if (onEnd) setTimeout(onEnd, Math.min(8000, Math.max(1500, text.length * 55))); return }
+    if (!voiceOnRef.current || !synth) { if (onEnd) setTimeout(onEnd, Math.min(9000, Math.max(1500, text.length * 55))); return }
     synth.cancel()
-    const u = new SpeechSynthesisUtterance(text)
-    if (voiceRef.current) u.voice = voiceRef.current
-    u.rate = 0.97; u.pitch = 1
-    if (onEnd) u.onend = onEnd
-    synth.speak(u)
+    const phrases = text.split(/[\n,.!?]+/).map(s => s.trim()).filter(Boolean)
+    if (!phrases.length) { onEnd?.(); return }
+    const token = ++speakTokenRef.current
+    let i = 0
+    const next = () => {
+      if (speakTokenRef.current !== token) return
+      if (i >= phrases.length) { onEnd?.(); return }
+      const phrase = phrases[i]
+      const u = new SpeechSynthesisUtterance(phrase)
+      if (voiceRef.current) u.voice = voiceRef.current
+      u.rate = isBeat(phrase) ? 0.85 : 0.95
+      u.pitch = 1
+      u.onend = () => {
+        const cur = phrases[i]; const nxt = phrases[i + 1]
+        i++
+        const gap = (isBeat(cur) || (nxt && isBeat(nxt))) ? 750 : 280
+        setTimeout(next, gap)
+      }
+      u.onerror = () => { i++; setTimeout(next, 200) }
+      synth.speak(u)
+    }
+    next()
   }
   const toggleVoice = () => { setVoiceOn(v => { const nv = !v; if (nv) unlockTTS(); else stopSpeaking(); return nv }) }
   const toggleMic = () => {
