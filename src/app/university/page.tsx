@@ -24,13 +24,16 @@ const LIBRARIES: Lib[] = [
     id: 'sales', name: 'Sales', emoji: '📈', color: '#2563EB',
     desc: 'Scripts, closing, and real training calls.',
     videos: [
-      { id: 'ZzlQRicLGL4', title: 'Training: Jason Fuller and Gil', desc: '' },
+      { id: 'McmBsH1Euvc', title: '10 Competitive Advantages of Phone Sales', desc: '' },
+      { id: 'pMsf80GhjtQ', title: 'Tonality, the Music Behind Your Words', desc: '' },
     ],
   },
   {
     id: 'national', name: 'National Calls', emoji: '📡', color: '#60a5fa',
     desc: 'Recordings from company-wide calls and team trainings.',
-    videos: [],
+    videos: [
+      { id: 'ZzlQRicLGL4', title: 'Training: Jason Fuller and Gil', desc: '' },
+    ],
   },
 ]
 
