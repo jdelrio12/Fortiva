@@ -7,7 +7,7 @@ const tabs = [
   { href: '/objections',  label: 'Objections',  icon: '🛡', match: ['/objections'] },
   { href: '/roleplay',    label: 'Role Play',   icon: '🤖', match: ['/roleplay'] },
   { href: '/train',       label: 'Train',       icon: '🎯', match: ['/train'] },
-  { href: '/videos',      label: 'Videos',      icon: '🎬', match: ['/videos'] },
+  { href: '/university',  label: 'FIG U',       icon: '🎓', match: ['/university'] },
   { href: '/growth',      label: 'Growth',      icon: '🌱', match: ['/growth', '/fmb', '/mentor'] },
 ]
 export default function Nav() {
