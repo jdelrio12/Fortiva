@@ -21,12 +21,19 @@ const FOLDERS: Folder[] = [
   {
     id: 'meeting', name: 'Meeting Review', emoji: '🗒️', color: '#2563EB',
     desc: 'Notes, recaps, and materials from team meetings.',
-    docs: [],
+    docs: [
+      { file: 'Lead_strategy.jpeg', title: 'Invest in Leads, Invest in Your Future', desc: 'Call recap: building your high-performing digital lead machine.' },
+      { file: 'Competitive_advantages_of_selling_over_the_phone.jpeg', title: 'Fortiva University, Week 1 Recap', desc: 'Competitive advantages of phone selling, key principles, and the Fortiva Commitment.' },
+      { file: 'Tonality_the_music_behind_your_words.jpeg', title: 'Fortiva University, Week 2 Recap', desc: 'Tonality, the music behind your words. The 7 notes of tonality.' },
+    ],
   },
   {
     id: 'sales', name: 'Sales Documents', emoji: '📈', color: '#EAB308',
     desc: 'Forms, fact finders, and everything you use in the field.',
-    docs: [],
+    docs: [
+      { file: 'Fortiva_Life_Insurance_Needs_Analysis.pdf', title: 'Life Insurance Needs Analysis', desc: 'Client fact finder: protection, mortgage, income replacement, IUL. 4 pages.' },
+      { file: 'Carrier_Symbols.jpeg', title: 'Carrier Symbols', desc: 'Quick reference: the emoji shorthand for each carrier.' },
+    ],
   },
 ]
 
@@ -39,6 +46,7 @@ const iconFor = (file: string) => {
   if (['png', 'jpg', 'jpeg'].includes(ext)) return '🖼️'
   return '📄'
 }
+const isImage = (file: string) => ['png', 'jpg', 'jpeg', 'webp', 'gif'].includes(file.split('.').pop()?.toLowerCase() || '')
 const extLabel = (file: string) => (file.split('.').pop() || '').toUpperCase()
 
 export default function DocsPage() {
@@ -64,7 +72,7 @@ export default function DocsPage() {
         ) : (
           <div className="flex flex-col gap-3 stagger">
             {folder.docs.map(d => (
-              <a key={d.file} href={`/docs/${d.file}`} target="_blank" rel="noopener noreferrer" download
+              <a key={d.file} href={`/docs/${d.file}`} target="_blank" rel="noopener noreferrer" {...(isImage(d.file) ? {} : { download: '' })}
                 className="glass rounded-2xl p-4 w-full" style={{ textDecoration: 'none', display: 'block', border: '1px solid rgba(199,205,214,0.1)' }}>
                 <div className="flex items-center gap-3">
                   <div style={{ fontSize: 26, lineHeight: 1 }}>{iconFor(d.file)}</div>
@@ -73,7 +81,7 @@ export default function DocsPage() {
                     {d.desc ? <div style={{ ...S, fontSize: 12, color: 'rgba(199,205,214,0.6)', marginTop: 3 }}>{d.desc}</div> : null}
                     <div style={{ ...S, fontSize: 10, fontWeight: 600, letterSpacing: '0.12em', color: 'rgba(199,205,214,0.4)', marginTop: 5 }}>{extLabel(d.file)}</div>
                   </div>
-                  <div style={{ color: '#2563EB', fontSize: 18 }}>⬇</div>
+                  <div style={{ color: '#2563EB', fontSize: 18 }}>{isImage(d.file) ? '↗' : '⬇'}</div>
                 </div>
               </a>
             ))}
