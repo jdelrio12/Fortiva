@@ -8,6 +8,7 @@ const tabs = [
   { href: '/roleplay',    label: 'Role Play',   icon: '🤖', match: ['/roleplay'] },
   { href: '/train',       label: 'Train',       icon: '🎯', match: ['/train'] },
   { href: '/university',  label: 'FIG U',       icon: '🎓', match: ['/university'] },
+  { href: '/docs',        label: 'Docs',        icon: '📁', match: ['/docs'] },
   { href: '/growth',      label: 'Growth',      icon: '🌱', match: ['/growth', '/fmb', '/mentor'] },
 ]
 export default function Nav() {
@@ -42,8 +43,8 @@ export default function Nav() {
             const active = tab.match.some((m) => path.startsWith(m))
             return (
               <Link key={tab.href} href={tab.href} className="flex-1 flex flex-col items-center gap-1 py-3 transition-colors relative"
-                style={{ color: active ? '#2563EB' : 'rgba(199,205,214,0.4)', fontFamily: 'Inter, sans-serif', fontSize: 8.5, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                <span className="text-lg leading-none">{tab.icon}</span>
+                style={{ color: active ? '#2563EB' : 'rgba(199,205,214,0.4)', fontFamily: 'Inter, sans-serif', fontSize: 8, fontWeight: 600, letterSpacing: '0.02em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: 16, lineHeight: 1 }}>{tab.icon}</span>
                 <span>{tab.label}</span>
                 {active && <span className="absolute top-0 inset-x-0 h-0.5 rounded-full" style={{ background: 'linear-gradient(90deg,#1d4ed8,#2563EB,#1d4ed8)' }} />}
               </Link>
