@@ -26,6 +26,7 @@ const LIBRARIES: Lib[] = [
     videos: [
       { id: 'McmBsH1Euvc', title: '10 Competitive Advantages of Phone Sales', desc: '' },
       { id: 'pMsf80GhjtQ', title: 'Tonality, the Music Behind Your Words', desc: '' },
+      { id: 'dTl9tAfOZhc', title: 'Mastering the Conversation', desc: '' },
     ],
   },
   {
