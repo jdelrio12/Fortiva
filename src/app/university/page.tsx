@@ -27,6 +27,7 @@ const LIBRARIES: Lib[] = [
       { id: 'McmBsH1Euvc', title: '10 Competitive Advantages of Phone Sales', desc: '' },
       { id: 'pMsf80GhjtQ', title: 'Tonality, the Music Behind Your Words', desc: '' },
       { id: 'dTl9tAfOZhc', title: 'Mastering the Conversation', desc: '' },
+      { id: 'UIr1I9NC4L0', title: 'Handling Third Party Objection', desc: '' },
     ],
   },
   {
